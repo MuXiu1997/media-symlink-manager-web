@@ -2,8 +2,10 @@ import {
   defineConfig,
   presetAttributify,
   presetIcons,
+  presetMini,
   presetUno,
   presetWebFonts,
+  transformerDirectives,
 } from 'unocss'
 
 export default defineConfig({
@@ -13,6 +15,7 @@ export default defineConfig({
   ],
   presets: [
     presetUno(),
+    presetMini(),
     presetAttributify(),
     presetIcons({
       scale: 1.2,
@@ -25,5 +28,8 @@ export default defineConfig({
         mono: 'DM Mono',
       },
     }),
+  ],
+  transformers: [
+    transformerDirectives(),
   ],
 })
