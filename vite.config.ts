@@ -39,6 +39,11 @@ export default defineConfig({
         'vue',
         'vue-router',
         '@vueuse/core',
+        {
+          'naive-ui': [
+            'useMessage',
+          ],
+        },
       ],
       dts: true,
       dirs: [

@@ -12,6 +12,7 @@
     "types": [
       "vite/client",
       "vite-plugin-pages/client",
+      "naive-ui/volar",
       "unplugin-vue-macros/macros-global"
     ],
     "resolveJsonModule": true,
