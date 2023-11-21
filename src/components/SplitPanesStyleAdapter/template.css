@@ -1,0 +1,20 @@
+.splitpanes {
+  --n-splitpanes-border-color: __border_color__;
+  --n-splitpanes-background-color: __background_color__;
+}
+
+.splitpanes.default-theme .splitpanes__pane {
+  background-color: var(--n-splitpanes-background-color) !important;
+}
+
+.default-theme.splitpanes--vertical > .splitpanes__splitter, .default-theme .splitpanes--vertical > .splitpanes__splitter {
+  border-left-color: var(--n-splitpanes-border-color) !important;
+}
+
+.splitpanes.default-theme .splitpanes__splitter:before, .splitpanes.default-theme .splitpanes__splitter:after {
+  background-color: var(--n-splitpanes-border-color) !important;
+}
+
+.splitpanes.default-theme .splitpanes__splitter {
+  background-color: var(--n-splitpanes-background-color) !important;
+}
