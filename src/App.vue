@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { darkTheme, dateZhCN, lightTheme, zhCN } from 'naive-ui'
+import SplitPanesStyleAdapter from '~/components/SplitPanesStyleAdapter'
 
-isDark.value = true
 const nTheme = computed(() => isDark.value ? darkTheme : lightTheme)
 
 const SetupGlobal = defineComponent({
@@ -17,9 +17,16 @@ const SetupGlobal = defineComponent({
 <template>
   <n-config-provider :theme="nTheme" :locale="zhCN" :date-locale="dateZhCN" abstract>
     <n-message-provider>
-      <RouterView />
+      <router-view v-slot="{ Component }">
+        <transition>
+          <keep-alive :include="['Home']">
+            <component :is="Component" />
+          </keep-alive>
+        </transition>
+      </router-view>
       <n-global-style />
       <SetupGlobal />
+      <SplitPanesStyleAdapter />
     </n-message-provider>
   </n-config-provider>
 </template>
