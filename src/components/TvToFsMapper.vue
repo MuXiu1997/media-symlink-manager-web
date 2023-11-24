@@ -27,7 +27,8 @@ function handleCopy(paths: Array<string>) {
   }
 }
 
-fsSelectEmitter.on('copy', handleCopy)
+const fsSelectEmitter = useFsSelectEmitter()
+fsSelectEmitter.autoOff('copy', handleCopy)
 </script>
 
 <template>

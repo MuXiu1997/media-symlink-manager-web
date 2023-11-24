@@ -39,6 +39,8 @@ async function handleApply() {
     message.success('应用成功')
   })
 }
+
+useFsSelectEmitter('provide')
 </script>
 
 <template>

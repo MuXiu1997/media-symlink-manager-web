@@ -24,7 +24,8 @@ onMounted(() => {
 })
 
 const addedIds = computed(() => new Set(tvList.value.map(tv => tv.tmdb_id)))
-tvSelectEmitter.on('addSuccess', listTv)
+const tvSelectEmitter = useTvSelectEmitter('provide')
+tvSelectEmitter.autoOff('addSuccess', listTv)
 
 const router = useRouter()
 

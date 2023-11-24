@@ -112,6 +112,7 @@ const labelRender: NonNullable<TreeProps['renderLabel']> = (info) => {
 
 // endregion Setup Tree
 
+const fsSelectEmitter = useFsSelectEmitter()
 function handleCopy() {
   fsSelectEmitter.emit('copy', sortedCheckedKeys.value)
 }

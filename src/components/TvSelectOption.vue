@@ -16,6 +16,7 @@ const posterW188H282BaseUrl = 'https://www.themoviedb.org/t/p/w188_and_h282_face
 const { loading, withLoading } = useLoading()
 
 const message = useMessage()
+const tvSelectEmitter = useTvSelectEmitter()
 async function handleAdd() {
   await withLoading(async () => {
     await tvApi.addTv(props.tv.id)
