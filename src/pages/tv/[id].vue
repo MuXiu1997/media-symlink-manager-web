@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { isNil } from 'lodash'
 import { Pane, Splitpanes } from 'splitpanes'
+
 import 'splitpanes/dist/splitpanes.css'
 import tvApi from '~/api/tv'
 import TvToFsMapper from '~/components/TvToFsMapper.vue'
@@ -45,22 +46,48 @@ useFsSelectEmitter('provide')
 
 <template>
   <n-spin :show="loading || isNil(tv)">
-    <n-page-header h-100vh flex flex-col @back="$router.back()">
+    <n-page-header
+      h-100vh
+      flex
+      flex-col
+      @back="$router.back()"
+    >
       <template #title>
         {{ isNil(tv) ? 'Loading...' : `${tv.name} (${tv.year})` }}
       </template>
       <template #extra>
-        <n-space size="small" p-4px>
-          <n-button size="small" ghost :loading="saveLoading" @click="handleSave">
+        <n-space
+          size="small"
+          p-4px
+        >
+          <n-button
+            size="small"
+            ghost
+            :loading="saveLoading"
+            @click="handleSave"
+          >
             保存
           </n-button>
-          <n-button size="small" type="success" ghost :loading="applyLoading" @click="handleApply">
+          <n-button
+            size="small"
+            type="success"
+            ghost
+            :loading="applyLoading"
+            @click="handleApply"
+          >
             应用
           </n-button>
         </n-space>
       </template>
-      <Splitpanes class="default-theme" :dbl-click-splitter="false" h-full>
-        <Pane size="60" style="display:flex;flex-direction:column;overflow:hidden;">
+      <Splitpanes
+        class="default-theme"
+        :dbl-click-splitter="false"
+        h-full
+      >
+        <Pane
+          size="60"
+          style="display:flex;flex-direction:column;overflow:hidden;"
+        >
           <TvToFsMapper :tv="tv" />
         </Pane>
         <Pane>

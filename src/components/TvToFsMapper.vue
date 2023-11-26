@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { pull } from 'lodash'
-import type { Tv } from '~/types'
+
 import { getEpisodeKey } from '~/utils'
+
+import type { Tv } from '~/types'
 
 const props = defineProps<{
   tv: Tv | null
@@ -33,7 +35,11 @@ fsSelectEmitter.autoOff('copy', handleCopy)
 
 <template>
   <div h-full>
-    <div flex flex-none flex-justify-center>
+    <div
+      flex
+      flex-none
+      flex-justify-center
+    >
       <div style="flex: 0 0;white-space:nowrap;display:flex;align-items:center;justify-content:center;">
         基础目录:
       </div>
@@ -45,7 +51,12 @@ fsSelectEmitter.autoOff('copy', handleCopy)
         placeholder=""
       />
     </div>
-    <n-tabs type="line" animated :default-value="0" @update:value="(v) => { currentSeasonIdx = v }">
+    <n-tabs
+      type="line"
+      animated
+      :default-value="0"
+      @update:value="(v) => { currentSeasonIdx = v }"
+    >
       <n-tab-pane
         v-for="(s, idx) in seasons"
         :key="s.season_number"
@@ -53,9 +64,16 @@ fsSelectEmitter.autoOff('copy', handleCopy)
         :tab="s.name"
         display-directive="show:lazy"
       >
-        <div mb-48px flex px-12px>
+        <div
+          mb-48px
+          flex
+          px-12px
+        >
           <!-- region 列 - 锁定 -->
-          <div class="__col __col__[lock]" w-36px>
+          <div
+            class="__col __col__[lock]"
+            w-36px
+          >
             <div class="__col__head">
               <n-tooltip trigger="hover">
                 <template #trigger>
@@ -101,7 +119,10 @@ fsSelectEmitter.autoOff('copy', handleCopy)
           </div>
           <!-- endregion 列 - 锁定 -->
           <!-- region 列 - ID -->
-          <div class="__col __col__[id]" w-64px>
+          <div
+            class="__col __col__[id]"
+            w-64px
+          >
             <div class="__col__head">
               ID
             </div>
@@ -116,7 +137,10 @@ fsSelectEmitter.autoOff('copy', handleCopy)
           </div>
           <!-- endregion 列 - ID -->
           <!-- region 列 - 标题 -->
-          <div class="__col __col__[title]" w-120px>
+          <div
+            class="__col __col__[title]"
+            w-120px
+          >
             <div class="__col__head">
               标题
             </div>
@@ -126,14 +150,20 @@ fsSelectEmitter.autoOff('copy', handleCopy)
               class="__col__row"
               flex-justify-start
             >
-              <n-ellipsis :max-lines="1" w-full>
+              <n-ellipsis
+                :max-lines="1"
+                w-full
+              >
                 {{ e.name }}
               </n-ellipsis>
             </div>
           </div>
           <!-- endregion 列 - 标题 -->
           <!-- region 列 - 文件路径 -->
-          <div class="__col __col__[filepath]" important-flex-grow-1>
+          <div
+            class="__col __col__[filepath]"
+            important-flex-grow-1
+          >
             <div class="__col__head">
               <n-tooltip trigger="hover">
                 <template #trigger>
@@ -156,7 +186,10 @@ fsSelectEmitter.autoOff('copy', handleCopy)
               class="__col__row"
               flex-justify-start
             >
-              <n-tooltip trigger="hover" :disabled="filepathMappings[getEpisodeKey(e)].length === 0">
+              <n-tooltip
+                trigger="hover"
+                :disabled="filepathMappings[getEpisodeKey(e)].length === 0"
+              >
                 <template #trigger>
                   <n-input
                     v-model:value="filepathMappings[getEpisodeKey(e)]"

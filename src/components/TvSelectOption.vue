@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { TmdbTv } from '~/types'
 import tvApi from '~/api/tv'
+
+import type { TmdbTv } from '~/types'
 
 const props = defineProps<{
   tv: TmdbTv
@@ -32,23 +33,47 @@ async function handleAdd() {
       object-fit="contain"
       :src="`${posterW188H282BaseUrl}${tv.poster_path}`"
       style="flex-basis: 94px"
-      w-94px flex-none
+      w-94px
+      flex-none
     />
-    <div min-w-0 flex-shrink-0 flex-grow-1 flex-basis-0 px-15px py-10px>
+    <div
+      min-w-0
+      flex-shrink-0
+      flex-grow-1
+      flex-basis-0
+      px-15px
+      py-10px
+    >
       <h2 text-size-1.2em>
         {{ tv.name }}
       </h2>
       <div>
         {{ formatDate(tv.first_air_date) }}
       </div>
-      <div mt-20px box-border h-auto w-full>
+      <div
+        mt-20px
+        box-border
+        h-auto
+        w-full
+      >
         <p class="tv-overview">
           {{ tv.overview }}
         </p>
       </div>
     </div>
-    <div w-80px flex flex-justify-end flex-items-center>
-      <n-button type="primary" ghost :disabled="added" :loading="loading" @click="handleAdd">
+    <div
+      w-80px
+      flex
+      flex-justify-end
+      flex-items-center
+    >
+      <n-button
+        type="primary"
+        ghost
+        :disabled="added"
+        :loading="loading"
+        @click="handleAdd"
+      >
         {{ added ? '已添加' : '添加' }}
       </n-button>
     </div>

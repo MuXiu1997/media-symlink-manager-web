@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import type { ButtonProps, TreeOption, TreeProps } from 'naive-ui'
-import { NButton } from 'naive-ui'
 import { isEmpty, isNil, padStart, pull, union, xor } from 'lodash'
+import { NButton } from 'naive-ui'
+
 import fsApi from '~/api/fs'
+
+import type { ButtonProps, TreeOption, TreeProps } from 'naive-ui'
 import type { FSItem } from '~/types'
 
 const basePath = '/'
@@ -22,12 +24,10 @@ const sortedCheckedKeys = computed(() => checkedKeys.value.toSorted())
 const pattern = ref('')
 
 const filter: NonNullable<TreeProps['filter']> = ($pattern, option) => {
-  if ($pattern === '')
-    return true
+  if ($pattern === '') return true
 
   const label = option.label
-  if (isNil(label))
-    return false
+  if (isNil(label)) return false
 
   return label.toLowerCase().includes($pattern.toLowerCase())
 }
@@ -41,10 +41,8 @@ function convertToTreeOption(fsItem: FSItem): TreeOption {
     isLeaf: !fsItem.is_dir,
     checkboxDisabled: fsItem.is_dir,
     prefix: () => {
-      if (fsItem.is_dir)
-        return '📁'
-      else
-        return '📄'
+      if (fsItem.is_dir) return '📁'
+      else return '📄'
     },
     suffix: () => {
       if (option.isLeaf) {
@@ -100,10 +98,12 @@ const labelRender: NonNullable<TreeProps['renderLabel']> = (info) => {
     'div',
     {
       onClick: () => {
-        if (info.option.isLeaf)
+        if (info.option.isLeaf) {
           checkedKeys.value = xor(checkedKeys.value, [info.option.key as string])
-        else
+        }
+        else {
           expandedKeys.value = xor(expandedKeys.value, [info.option.key as string])
+        }
       },
     },
     [info.option.label],
@@ -126,21 +126,55 @@ function handleRemoveCheckedKey(key: string) {
 </script>
 
 <template>
-  <div class="fs-select" h-full flex flex-col overflow-hidden>
-    <n-space size="small" class="fs-select__actions" flex-none>
-      <NButton :disabled="checkedKeysIsEmpty" size="small" @click="handleCopy">
+  <div
+    class="fs-select"
+    h-full
+    flex
+    flex-col
+    overflow-hidden
+  >
+    <n-space
+      size="small"
+      class="fs-select__actions"
+      flex-none
+    >
+      <NButton
+        :disabled="checkedKeysIsEmpty"
+        size="small"
+        @click="handleCopy"
+      >
         导入到左侧
       </NButton>
-      <NButton :disabled="checkedKeysIsEmpty" size="small" @click="showPreview = true">
+      <NButton
+        :disabled="checkedKeysIsEmpty"
+        size="small"
+        @click="showPreview = true"
+      >
         预览
       </NButton>
-      <NButton :disabled="checkedKeysIsEmpty" size="small" @click="checkedKeys = []">
+      <NButton
+        :disabled="checkedKeysIsEmpty"
+        size="small"
+        @click="checkedKeys = []"
+      >
         清空
       </NButton>
-      <n-input v-model:value="pattern" size="small" placeholder="过滤文件名" clearable />
+      <n-input
+        v-model:value="pattern"
+        size="small"
+        placeholder="过滤文件名"
+        clearable
+      />
     </n-space>
-    <n-divider flex-none important-my-12px />
-    <div class="fs-select__tree" h-full overflow-auto>
+    <n-divider
+      flex-none
+      important-my-12px
+    />
+    <div
+      class="fs-select__tree"
+      h-full
+      overflow-auto
+    >
       <n-tree
         v-model:expanded-keys="expandedKeys"
         v-model:checked-keys="checkedKeys"
@@ -150,21 +184,38 @@ function handleRemoveCheckedKey(key: string) {
         :pattern="pattern"
         :filter="filter"
         :show-irrelevant-nodes="false"
-        checkable selectable show-line block-line
+        checkable
+        selectable
+        show-line
+        block-line
         :on-load="handleLoad"
       />
     </div>
-    <n-modal v-model:show="showPreview" class="fs-select__preview" h-80vh max-h-80vh max-w-80vw w-600px overflow-auto>
+    <n-modal
+      v-model:show="showPreview"
+      class="fs-select__preview"
+      h-80vh
+      max-h-80vh
+      max-w-80vw
+      w-600px
+      overflow-auto
+    >
       <n-card>
         <n-list hoverable>
-          <n-list-item v-for="(checkedKey, idx) in sortedCheckedKeys" :key="checkedKey">
+          <n-list-item
+            v-for="(checkedKey, idx) in sortedCheckedKeys"
+            :key="checkedKey"
+          >
             <template #prefix>
               <n-tag size="small">
                 {{ padStart((idx + 1).toString(), sortedCheckedKeys.length.toString().length, '0') }}
               </n-tag>
             </template>
             <template #suffix>
-              <NButton size="tiny" @click="handleRemoveCheckedKey(checkedKey)">
+              <NButton
+                size="tiny"
+                @click="handleRemoveCheckedKey(checkedKey)"
+              >
                 移除
               </NButton>
             </template>

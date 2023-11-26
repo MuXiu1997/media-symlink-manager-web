@@ -1,6 +1,7 @@
-import { defineComponent, effect, stop } from 'vue'
-import { useThemeVars } from 'naive-ui'
 import styleTemplate from './template.css?inline'
+
+import { useThemeVars } from 'naive-ui'
+import { defineComponent, effect, stop } from 'vue'
 
 const created = ref(false)
 

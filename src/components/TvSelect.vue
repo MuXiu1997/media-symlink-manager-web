@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import tvApi from '~/api/tv'
+
 import type { TmdbTv } from '~/types'
 
 const props = withDefaults(
@@ -22,6 +23,7 @@ const results = ref<Array<TmdbTv>>([])
 
 const query = ref('')
 const { loading, withLoading } = useLoading()
+
 async function handleSearch() {
   await withLoading(async () => {
     if (query.value === '') {
@@ -38,7 +40,10 @@ async function handleSearch() {
 
 <template>
   <div>
-    <n-modal :show="$show" @mask-click="$show = false">
+    <n-modal
+      :show="$show"
+      @mask-click="$show = false"
+    >
       <n-card
         title="添加 TV"
         size="huge"
@@ -69,7 +74,12 @@ async function handleSearch() {
           </n-button>
         </n-input-group>
         <div>
-          <n-empty v-if="results.length === 0" size="huge" description="暂无数据" mt-20px />
+          <n-empty
+            v-if="results.length === 0"
+            size="huge"
+            description="暂无数据"
+            mt-20px
+          />
           <tv-select-option
             v-for="tv in results"
             :key="tv.id"

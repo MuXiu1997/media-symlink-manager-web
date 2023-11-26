@@ -21,10 +21,8 @@ axiosInstance.interceptors.response.use(
     }
 
     if (error.code === AxiosError.ERR_NETWORK) {
-      if (!navigator.onLine)
-        window.$message.error('网络错误，请检查网络连接')
-      else
-        window.$message.error('服务器未响应，请稍后再试')
+      if (!navigator.onLine) window.$message.error('网络错误，请检查网络连接')
+      else window.$message.error('服务器未响应，请稍后再试')
       return Promise.reject(error)
     }
 

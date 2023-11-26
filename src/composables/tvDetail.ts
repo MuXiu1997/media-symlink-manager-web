@@ -1,7 +1,9 @@
-import type { MaybeRefOrGetter } from '@vueuse/core'
 import { isNil } from 'lodash'
-import type { TmdbSeason, Tv } from '~/types'
+
 import tvApi from '~/api/tv'
+
+import type { MaybeRefOrGetter } from '@vueuse/core'
+import type { TmdbSeason, Tv } from '~/types'
 
 export function useTvDetail(seriesId: MaybeRefOrGetter<number>) {
   const { loading, withLoading } = useLoading()
@@ -24,8 +26,7 @@ export function useTvDetail(seriesId: MaybeRefOrGetter<number>) {
 export function useUnpackedTvDetail(tv: MaybeRefOrGetter<Tv | null>) {
   const seasons = computed((): Array<TmdbSeason> => {
     const $tv = toValue(tv)
-    if (isNil($tv))
-      return []
+    if (isNil($tv)) return []
 
     return $tv.tmdb_seasons
   })
@@ -33,15 +34,13 @@ export function useUnpackedTvDetail(tv: MaybeRefOrGetter<Tv | null>) {
   const baseDir = computed({
     get: (): string => {
       const $tv = toValue(tv)
-      if (isNil($tv))
-        return ''
+      if (isNil($tv)) return ''
 
       return $tv.filepath_mapping.base_dir
     },
     set: (val: string) => {
       const $tv = toValue(tv)
-      if (isNil($tv))
-        return
+      if (isNil($tv)) return
 
       $tv.filepath_mapping.base_dir = val
     },
@@ -49,16 +48,14 @@ export function useUnpackedTvDetail(tv: MaybeRefOrGetter<Tv | null>) {
 
   const filepathMappings = computed((): Record<string, string> => {
     const $tv = toValue(tv)
-    if (isNil($tv))
-      return {}
+    if (isNil($tv)) return {}
 
     return $tv.filepath_mapping.mappings
   })
 
   const lockedKeys = computed((): Array<string> => {
     const $tv = toValue(tv)
-    if (isNil($tv))
-      return []
+    if (isNil($tv)) return []
 
     return $tv.filepath_mapping.locked_keys
   })

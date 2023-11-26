@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import tvApi from '~/api/tv'
+
 import type { ButtonProps } from 'naive-ui'
 import type { TvListItem } from '~/types'
-import tvApi from '~/api/tv'
 
 defineOptions({
   name: 'Home',
@@ -55,19 +56,38 @@ async function handleDelete(tmdbId: number) {
     <div px-48px>
       <n-page-header subtitle="Media Symlink Manager">
         <template #extra>
-          <n-space flex-items-center p-12px>
-            <n-button type="primary" ghost @click="showTvSelect = true">
+          <n-space
+            flex-items-center
+            p-12px
+          >
+            <n-button
+              type="primary"
+              ghost
+              @click="showTvSelect = true"
+            >
               添加 TV
             </n-button>
-            <n-button text @click="toggleDark()">
+            <n-button
+              text
+              @click="toggleDark()"
+            >
               {{ isDark ? '浅色' : '深色' }}
             </n-button>
           </n-space>
         </template>
       </n-page-header>
 
-      <n-list clickable bordered hoverable>
-        <n-list-item v-for="tv in tvList" :key="tv.tmdb_id" @click="toTv(tv.tmdb_id)">
+      <n-list
+
+        clickable
+        bordered
+        hoverable
+      >
+        <n-list-item
+          v-for="tv in tvList"
+          :key="tv.tmdb_id"
+          @click="toTv(tv.tmdb_id)"
+        >
           <template #suffix>
             <n-popconfirm
               :negative-button-props="{ text: true } as ButtonProps"
@@ -75,12 +95,20 @@ async function handleDelete(tmdbId: number) {
               @positive-click="handleDelete(tv.tmdb_id)"
             >
               <template #trigger>
-                <n-button type="error" text @click.stop>
+                <n-button
+                  type="error"
+                  text
+                  @click.stop
+                >
                   删除
                 </n-button>
               </template>
               确定删除
-              <n-tag :bordered="false" size="small" mx-8px>
+              <n-tag
+                :bordered="false"
+                size="small"
+                mx-8px
+              >
                 {{ `${tv.name} (${tv.year})` }}
               </n-tag>
               吗？该操作不可恢复！
@@ -90,7 +118,10 @@ async function handleDelete(tmdbId: number) {
         </n-list-item>
       </n-list>
     </div>
-    <tv-select v-model:show="showTvSelect" :added-ids="addedIds" />
+    <tv-select
+      v-model:show="showTvSelect"
+      :added-ids="addedIds"
+    />
   </n-spin>
 </template>
 

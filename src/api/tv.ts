@@ -1,5 +1,6 @@
-import type { AxiosResponse } from 'axios'
 import { axiosInstance } from '~/api/request'
+
+import type { AxiosResponse } from 'axios'
 import type { TmdbTv, Tv, TvListItem } from '~/types'
 
 async function searchTv(query: string): Promise<AxiosResponse<Array<TmdbTv>>> {
