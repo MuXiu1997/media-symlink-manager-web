@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@muxiu1997/vue-easy-di':
+    specifier: 0.1.0-rc.2
+    version: 0.1.0-rc.2(vue@3.3.9)
   '@muxiu1997/vue-use-emitter':
     specifier: 0.1.0-rc.8
     version: 0.1.0-rc.8(vue@3.3.9)

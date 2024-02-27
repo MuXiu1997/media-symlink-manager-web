@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { pull } from 'lodash'
 
+import { useSettings } from '~/composables/settings'
 import { getEpisodeKey } from '~/utils'
 
 import type { Tv } from '~/types'
@@ -8,6 +9,8 @@ import type { Tv } from '~/types'
 const props = defineProps<{
   tv: Tv | null
 }>()
+
+const settings = useSettings()
 
 const {
   seasons,
@@ -43,12 +46,13 @@ fsSelectEmitter.autoOff('copy', handleCopy)
       <div style="flex: 0 0;white-space:nowrap;display:flex;align-items:center;justify-content:center;">
         基础目录:
       </div>
-      <n-input
+      <n-auto-complete
         v-model:value="baseDir"
+        :options="settings.target_base_dir_options"
         size="small"
-        type="text"
         clearable
         placeholder=""
+        :get-show="() => true"
       />
     </div>
     <n-tabs

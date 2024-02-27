@@ -44,3 +44,8 @@ export interface FSItem {
   abs_path: string
   is_dir: boolean
 }
+
+export interface Settings {
+  target_base_dir_options: Array<string>
+  fs_select_base_dir: string
+}

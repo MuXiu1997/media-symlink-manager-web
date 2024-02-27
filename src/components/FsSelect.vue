@@ -7,17 +7,19 @@ import fsApi from '~/api/fs'
 import type { ButtonProps, TreeOption, TreeProps } from 'naive-ui'
 import type { FSItem } from '~/types'
 
-const basePath = '/'
+const settings = useSettings()
+
+const basePath = computed(() => settings.value.fs_select_base_dir)
 const data = ref<Array<TreeOption>>([
   convertToTreeOption({
-    name: basePath,
-    abs_path: basePath,
+    name: basePath.value,
+    abs_path: basePath.value,
     is_dir: true,
   }),
 ])
 
 // region Setup Tree
-const expandedKeys = ref<Array<string>>([basePath])
+const expandedKeys = ref<Array<string>>([basePath.value])
 const checkedKeys = ref<Array<string>>([])
 const checkedKeysIsEmpty = computed(() => isEmpty(checkedKeys.value))
 const sortedCheckedKeys = computed(() => checkedKeys.value.toSorted())
@@ -88,9 +90,15 @@ function convertToTreeOption(fsItem: FSItem): TreeOption {
 
 async function handleLoad(node: TreeOption) {
   const absPath = node.key as string
-  const res = await fsApi.ls(absPath)
-  const fsItems = res.data
-  node.children = fsItems.map(convertToTreeOption)
+  try {
+    const res = await fsApi.ls(absPath)
+    const fsItems = res.data
+    node.children = fsItems.map(convertToTreeOption)
+  }
+  catch (e) {
+    node.children = []
+    return false
+  }
 }
 
 const labelRender: NonNullable<TreeProps['renderLabel']> = (info) => {

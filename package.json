@@ -13,6 +13,7 @@
     "postinstall": "npx simple-git-hooks"
   },
   "dependencies": {
+    "@muxiu1997/vue-easy-di": "0.1.0-rc.2",
     "@muxiu1997/vue-use-emitter": "0.1.0-rc.8",
     "@vueuse/core": "^10.6.1",
     "vue": "^3.3.9",
