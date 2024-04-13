@@ -34,6 +34,38 @@ function handleCopy(paths: Array<string>) {
 
 const fsSelectEmitter = useFsSelectEmitter()
 fsSelectEmitter.autoOff('copy', handleCopy)
+
+const regexpLeft = ref<Array<string>>([])
+const regexpExpr = ref('')
+const regexpObj = computed(() => {
+  try {
+    return new RegExp(regexpExpr.value)
+  }
+  catch (e) {
+    return null
+  }
+})
+const regexpReplace = ref('')
+const regexpRight = computed(() => {
+  return regexpLeft.value.map((l) => {
+    const re = regexpObj.value
+    if (re === null) return l
+    return l.replace(re, regexpReplace.value)
+  })
+})
+const regexpTableData = computed(() => {
+  return regexpLeft.value.map((l, idx) => ({ left: l, right: regexpRight.value[idx] }))
+})
+function applyRegexpReplace() {
+  currentEpisodeKeys.value.forEach((key, idx) => {
+    filepathMappings.value[key] = regexpRight.value[idx]
+  })
+}
+const isShowRegexpModal = ref(false)
+function showRegexpModal() {
+  isShowRegexpModal.value = true
+  regexpLeft.value = currentUnlockedEpisodeKeys.value.map(k => filepathMappings.value[k])
+}
 </script>
 
 <template>
@@ -43,7 +75,10 @@ fsSelectEmitter.autoOff('copy', handleCopy)
       flex-none
       flex-justify-center
     >
-      <div style="flex: 0 0;white-space:nowrap;display:flex;align-items:center;justify-content:center;">
+      <div
+        style="flex: 0 0;white-space:nowrap;display:flex;align-items:center;justify-content:center;"
+        mr-8px
+      >
         基础目录:
       </div>
       <n-auto-complete
@@ -183,6 +218,16 @@ fsSelectEmitter.autoOff('copy', handleCopy)
                 </template>
                 全部清空
               </n-tooltip>
+              <n-button
+                style="line-height: inherit;"
+                tag="a"
+                text
+                ml-8px
+                underline
+                @click="showRegexpModal"
+              >
+                [ 正则批量修改 ]
+              </n-button>
             </div>
             <div
               v-for="e in s.episodes"
@@ -212,6 +257,58 @@ fsSelectEmitter.autoOff('copy', handleCopy)
         </div>
       </n-tab-pane>
     </n-tabs>
+    <n-modal
+      v-model:show="isShowRegexpModal"
+      preset="dialog"
+      :icon="() => ''"
+      title="正则批量修改"
+      style="width: 80vw"
+    >
+      <div>
+        <div
+          flex
+          flex-none
+          flex-justify-center
+        >
+          <div
+            style="flex: 0 0;white-space:nowrap;display:flex;align-items:center;justify-content:center;"
+            mr-8px
+          >
+            正则:
+          </div>
+          <n-input v-model:value="regexpExpr" />
+        </div>
+        <div
+          mt-8px
+          flex
+          flex-none
+          flex-justify-center
+        >
+          <div
+            style="flex: 0 0;white-space:nowrap;display:flex;align-items:center;justify-content:center;"
+            mr-8px
+          >
+            替换:
+          </div>
+          <n-input v-model:value="regexpReplace" />
+        </div>
+        <div mt-8px>
+          <n-button
+            type="primary"
+            ghost
+            @click="applyRegexpReplace"
+          >
+            批量替换
+          </n-button>
+        </div>
+        <n-data-table
+          mt-20px
+          :columns="[{ title: '当前路径', key: 'left' }, { title: '替换结果', key: 'right' }]"
+          :data="regexpTableData"
+          :single-line="false"
+        />
+      </div>
+    </n-modal>
   </div>
 </template>
 
